@@ -1,0 +1,54 @@
+schema = 1
+pathway = "p53"
+version = "v1"
+released = "2026-09-19"
+reason = "first release: binary XGBoost on Morgan, MACCS and RDKit descriptors over the Tox21 p53 screen"
+
+[signature]
+version = 1
+inputs = ["smiles"]
+
+[[signature.outputs]]
+name = "p53_activation"
+dtype = "float32"
+range = [0.0, 1.0]
+semantics = "P(activates the p53 response element reporter in the Tox21 qHTS screen). The assay does not separate the insults that reach it"
+missing = "NaN when RDKit cannot parse the input SMILES"
+
+[[signature.outputs]]
+name = "p53_cytotox"
+dtype = "float32"
+range = [0.0, 1.0]
+semantics = "P(reduces viability in the counter-screen over the same library). A compound scoring high on both readouts raised the reporter in a cell that was also dying"
+missing = "NaN when RDKit cannot parse the input SMILES"
+
+[dataset]
+name = "Tox21 p53 signalling qHTS"
+source = "PubChem BioAssay AID 651631 (qHTS assay for small molecule agonists of the p53 signaling pathway) and AID 651633 (qHTS assay for small molecule agonists of the p53 signaling pathway - cell viability), rows called Active or Inactive, one row per compound labelled by majority call across its assay records"
+url = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/assay/aid/651631/concise/CSV"
+retrieved = "2026-09-06"
+licence = "public-domain"
+redistributable = true
+path = "data/p53_tox21.parquet"
+labels = ["label", "cytotox"]
+sha256 = "ba1a96e935c2acc9cd208d16211938b62965a9d6cdfb6ffd6c56a3d49b7b5d2a"
+n_rows = 5767
+base_rate = 0.077163
+fetch = "python -m vp_p53.data fetch --verify"
+
+[model]
+family = "xgboost-binary"
+features = "combo3"
+fit = "one model per output, each on every compound its endpoint labels minus a 10% scaffold carve used for early stopping"
+weights = "weights.joblib"
+sha256 = "e3691a53994f70482dd03b61b3362ff0d199452a73bad21a13c220bf88e29998"
+
+[protocol]
+id = "scaffold-balanced-5seed@1"
+provider = "vp-core"
+core_version = "1.4.0"
+
+[provenance]
+python = "3.11.11"
+rdkit = "2026.03.5"
+xgboost = "3.2.0"

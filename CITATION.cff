@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+title: "vp-p53: p53 genotoxic stress response activation prediction"
+message: "If you use this package, please cite it and the underlying Tox21 data."
+type: software
+authors:
+  - name: "Sagace Labs"
+repository-code: "https://github.com/Sagace-Labs/vp-p53"
+license: Apache-2.0
+version: "1.0.0"
+abstract: >-
+  A predictor of p53 genotoxic stress response activation and of the
+  cell-viability loss it is confounded with, from molecular structure.
+keywords:
+  - cheminformatics
+  - drug-induced liver injury
+  - genotoxicity
+  - p53
+  - Tox21
+references:
+  - type: article
+    title: >-
+      Improving the human hazard characterization of chemicals: a Tox21 update
+    authors:
+      - family-names: Tice
+        given-names: Raymond R.
+    journal: "Environmental Health Perspectives"
+    year: 2013
+    doi: "10.1289/ehp.1205784"
+  - type: article
+    title: "PubChem 2025 update"
+    authors:
+      - family-names: Kim
+        given-names: Sunghwan
+    journal: "Nucleic Acids Research"
+    year: 2025
+    doi: "10.1093/nar/gkae1059"
